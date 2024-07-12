@@ -11,6 +11,8 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController emailTextEditingController =
       TextEditingController();
+      final TextEditingController phoneTextEditingController =
+      TextEditingController();
   final TextEditingController usernameTextEditingController =
       TextEditingController();
   final TextEditingController passwordTextEditingController =
@@ -86,6 +88,36 @@ class _SignupScreenState extends State<SignupScreen> {
                     return null;
                   },
                 ),
+
+              //phone
+
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: phoneTextEditingController,
+                  keyboardType: TextInputType.phone, // Use phone keyboard type
+                  decoration: const InputDecoration(
+                    labelText: "Phone Number",
+                    labelStyle: TextStyle(
+                      fontSize: 14,
+                    ),
+                    hintText: "123-456-7890", // Adjust hint as needed
+                    hintStyle: TextStyle(),
+                  ),
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 15,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty ) {
+                      return 'Please enter a phone number';
+                    }
+                    else if (value.length < 10) {
+                      return 'Phone number must be at least 10 digits';
+                    }
+                    return null;
+                  },
+                ),
+
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: passwordTextEditingController,
@@ -137,9 +169,28 @@ class _SignupScreenState extends State<SignupScreen> {
                   onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (c)=> const LoginScreen()));
                   },
-                  child: const Text(
-                    "Already Have an Account? Login Here",
-                    style: TextStyle(color: Colors.grey),
+                  child: const Text.rich(
+                    TextSpan(
+                      text: "Already Have an Account? ", // Default style
+                      style: TextStyle(color: Colors.grey),
+                      children: [
+                        TextSpan(
+                          text: "Login Here",
+                          
+                          style: TextStyle(
+                            color: Colors.pink,
+                            fontWeight: FontWeight.bold,
+                          
+                          ),
+                          
+                        ),
+                        WidgetSpan(child: Icon(
+                          Icons.arrow_forward,
+                          color: Colors.pink,
+                          size: 18,
+                        ))
+                      ],
+                    ),
                   ),
                 ),
               ],
