@@ -1,7 +1,12 @@
-import 'Authentication/signup_scrren.dart';
-import 'package:flutter/material.dart';
 
-void main() {
+import 'package:demoapp/Authentication/login_scrren.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Correct method name
+
   runApp(const MyApp());
 }
 
@@ -12,11 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Uber',
-     debugShowCheckedModeBanner:false,
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.black
-      ),
-      home: const SignupScreen(), // Use const here if possible
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: Colors.black),
+      home: const LoginScreen(), // Use const here if possible
     );
   }
 }

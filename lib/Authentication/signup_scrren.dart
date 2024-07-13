@@ -7,7 +7,6 @@ class SignupScreen extends StatefulWidget {
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
-  
 }
 
 class _SignupScreenState extends State<SignupScreen> {
@@ -21,12 +20,32 @@ class _SignupScreenState extends State<SignupScreen> {
       TextEditingController();
 
   CommonMethods cMethods = CommonMethods();
-    
+
   final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
 
   void checkIfNetworkIsAvailable() {
     cMethods.checkConnectivity(context);
+    signUpFormValidation();
+  }
+
+  signUpFormValidation() {
+    if (usernameTextEditingController.text.trim().length < 3) {
+      cMethods.displaySnackBar(
+          "Your Name Must be atleast 4 or more character", context);
+    } else if (phoneTextEditingController.text.trim().length < 10) {
+      cMethods.displaySnackBar(
+          "Your Mobile Number must be equal to 10 digits", context);
+    } else if (emailTextEditingController.text.contains("@")) {
+      cMethods.displaySnackBar("Please write Valid Email", context);
+    } else if (passwordTextEditingController.text.trim().length < 5) {
+      cMethods.displaySnackBar(
+          "Your password must be atleast 6 or more characters", context);
+    }
+    else
+    {
+      //register user
+    }
   }
 
   @override

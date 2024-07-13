@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "627460562459",
+    "project_id": "uberclone-c0e8c",
+    "storage_bucket": "uberclone-c0e8c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627460562459:android:b3c0a7c98bb1fb3474e2be",
+        "android_client_info": {
+          "package_name": "com.sandipan.usersapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPr9CF16e8ZezA-mD80AFlw0C_8ApwZkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
