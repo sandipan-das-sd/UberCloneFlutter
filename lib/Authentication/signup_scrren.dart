@@ -7,6 +7,7 @@ class SignupScreen extends StatefulWidget {
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
+  
 }
 
 class _SignupScreenState extends State<SignupScreen> {
@@ -20,7 +21,7 @@ class _SignupScreenState extends State<SignupScreen> {
       TextEditingController();
 
   CommonMethods cMethods = CommonMethods();
-
+    
   final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
 
