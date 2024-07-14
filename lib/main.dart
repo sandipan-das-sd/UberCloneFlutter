@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Uber',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: Colors.black),
-      home: const LoginScreen(), // Use const here if possible
+      home: const LoginScreen(), 
     );
   }
 }

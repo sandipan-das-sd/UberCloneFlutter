@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -68,9 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       icon: Icon(
                         _obscureText ? Icons.visibility : Icons.visibility_off,
                       ),
-                      onPressed: () {
-                        _togglePasswordVisibility();
-                      },
+                      onPressed: _togglePasswordVisibility,
                     ),
                   ),
                   style: const TextStyle(
@@ -102,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                    child: const Text.rich(
+                  child: const Text.rich(
                     TextSpan(
                       text: "Don't Have Account ? ", // Default style
                       style: TextStyle(color: Colors.grey),
