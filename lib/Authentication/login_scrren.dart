@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'signup_scrren.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -98,7 +99,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignupScreen(),
+                      ),
+                    );
                   },
                   child: const Text.rich(
                     TextSpan(
@@ -113,11 +119,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         WidgetSpan(
-                            child: Icon(
-                          Icons.arrow_forward,
-                          color: Colors.pink,
-                          size: 18,
-                        ))
+                          child: Icon(
+                            Icons.arrow_forward,
+                            color: Colors.pink,
+                            size: 18,
+                          ),
+                        ),
                       ],
                     ),
                   ),
