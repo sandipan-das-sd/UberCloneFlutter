@@ -1,6 +1,13 @@
+import 'package:demoapp/Widgets/loading_dialouge.dart';
+import 'package:demoapp/pages/home_page.dart';
+
 import 'login_scrren.dart';
-import 'package:demoapp/Methods/common_methods.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+
+import 'package:demoapp/Methods/common_methods.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -19,32 +26,68 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController passwordTextEditingController =
       TextEditingController();
 
-  CommonMethods cMethods = CommonMethods();
+  final CommonMethods cMethods = CommonMethods();
 
   final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
 
-  void checkIfNetworkIsAvailable() {
-    cMethods.checkConnectivity(context);
+ Future<void> checkIfNetworkIsAvailable() async {
+    await cMethods.checkConnectivity(context);
     signUpFormValidation();
   }
 
-  signUpFormValidation() {
-    if (usernameTextEditingController.text.trim().length < 3) {
+
+  Future<void> signUpFormValidation() async {
+    if (usernameTextEditingController.text.trim().length < 4) {
       cMethods.displaySnackBar(
-          "Your Name Must be atleast 4 or more character", context);
-    } else if (phoneTextEditingController.text.trim().length < 10) {
+          "Your Name Must be at least 4 or more characters", context);
+    } else if (phoneTextEditingController.text.trim().length != 10) {
       cMethods.displaySnackBar(
           "Your Mobile Number must be equal to 10 digits", context);
-    } else if (emailTextEditingController.text.contains("@")) {
-      cMethods.displaySnackBar("Please write Valid Email", context);
-    } else if (passwordTextEditingController.text.trim().length < 5) {
+    } else if (!emailTextEditingController.text.contains("@")) {
+      cMethods.displaySnackBar("Please write a valid Email", context);
+    } else if (passwordTextEditingController.text.trim().length < 6) {
       cMethods.displaySnackBar(
-          "Your password must be atleast 6 or more characters", context);
-    }
-    else
-    {
-      //register user
+          "Your password must be at least 6 or more characters", context);
+    } else {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) =>
+            const LoadingDialog(messageText: "Registering your Account..."),
+      );
+      try {
+        User? userFirebase =
+            (await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailTextEditingController.text.trim(),
+          password: passwordTextEditingController.text.trim(),
+        ))
+                .user;
+        if (userFirebase != null) {
+          DatabaseReference userRef = FirebaseDatabase.instance
+              .ref()
+              .child('users')
+              .child(userFirebase.uid);
+          Map<String, String> userDataMap = {
+            'name': usernameTextEditingController.text.trim(),
+            "email": emailTextEditingController.text.trim(),
+            "phone": phoneTextEditingController.text.trim(),
+            "id": userFirebase.uid,
+            "blockStatus": "no"
+          };
+          await userRef.set(userDataMap);
+          cMethods.displaySnackBar("Account created successfully!", context);
+       Navigator.push(
+              context, MaterialPageRoute(builder: (c) => const HomePage()));
+
+        } else {
+          cMethods.displaySnackBar("Account creation failed!", context);
+        }
+      } catch (error) {
+        cMethods.displaySnackBar(error.toString(), context);
+      } finally {
+        Navigator.pop(context); // Close the loading dialog
+      }
     }
   }
 
